@@ -1,0 +1,4 @@
+sudo docker pull akkudevops/dockernode
+sudo docker stop nodecontainer | true
+sudo docker rm nodecontainer | true
+sudo docker run -d -p80:3000 --name nodecontainer  akkudevops/dockernode
