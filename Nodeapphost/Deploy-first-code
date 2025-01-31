@@ -1,0 +1,4 @@
+docker build -t nodeimg .
+docker login -u  devopsbaby -p "Enter your password"
+docker tag nodeimg akkudevops/dockernode
+docker push akkudevops/dockernode
