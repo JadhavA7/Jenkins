@@ -6,3 +6,7 @@ docker run -d   --name jenkins   -v /home/ec2-user/jenkinsvolume:/var/jenkins_ho
 -v /usr/bin/docker:/usr/bin/docker   -p 8080:8080   jenkins/jenkins:lts
 
 
+# This for create container of jenkins without docker 
+
+docker run -d   --name jenkins   -v /home/ec2-user/jenkinsvolume:/var/jenkins_home -v /usr/bin/docker:/usr/bin/docker   -p 8080:8080
+jenkins/jenkins
