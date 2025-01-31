@@ -1,0 +1,46 @@
+pipeline {
+    agent any
+    tools{
+        nodejs 'mynode'     "Enter nodejs name which set in system in manage jenkins"
+    }
+    stages {
+        stage('git cloning') {
+            steps {
+                echo 'cloning files from github'
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/swati-zampal/nodepipeline.git']])
+                                "Enter above line form syntax for checkout version control"
+            }
+        }
+        stage('Build') {
+            steps {
+                echo 'Building nodejs project'
+                sh 'npm install'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing project'
+                sh './node_modules/mocha/bin/_mocha --exit ./test/test.js'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying nodejs project on live server'
+                script{
+                    sshagent(['88b2758c-0f33-422e-b7e3-f148a49d58fb']) {               "Create this syntex from syntax as ssh agent"
+                     sh '''
+                           ssh -o StrictHostKeyChecking=no ubuntu@43.204.114.125<<EOF  "Replace public or elastic IP"
+                            cd /home/ubuntu/nodeapp/                                   "Enter live server or deploy server folder path of git repo"
+                            git pull                                                   "Enter github repo URL"
+                            npm install
+                            sudo npm install -g pm2
+                            pm2 restart index.js || pm2 start index.js
+		                        exit
+                            EOF     
+                           '''
+                   }
+                }
+            }
+        }
+    }
+}
