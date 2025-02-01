@@ -1,0 +1,4 @@
+cd /home/ec2-user/nodeapp/
+git pull origin master
+npm install
+pm2 restart index.js
