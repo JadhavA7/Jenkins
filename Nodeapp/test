@@ -1,0 +1,2 @@
+npm install
+./node-modules/mocha/bin/_mocha --exit ./test/test.js
